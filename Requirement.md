@@ -1,19 +1,19 @@
-Project Requirements Document: SPA-Protected Multiplexed Tunneling System (SPAMTS)
+Project Requirements Document: Multiplexed Access with Secure Knock-Authenticated Tunneling on 443
 1. Introduction
- * 1.1. Project Goal: To develop a secure system (SPAMTS) that provides access to a backend service (e.g., SSH) via a tunnel. This tunnel will be obfuscated as standard web traffic (e.g., Secure WebSocket - WSS) on port 443. Access to initiate this tunnel will be gated by a Single Packet Authorization (SPA) mechanism, also on port 443. The system must also allow standard HTTPS and/or public WSS traffic on port 443 to be served or proxied concurrently without requiring SPA.
+ * 1.1. Project Goal: To develop a secure system that provides access to a backend service (e.g., SSH) via a tunnel. This tunnel will be obfuscated as standard web traffic (e.g., Secure WebSocket - WSS) on port 443. Access to initiate this tunnel will be gated by a Single Packet Authorization (SPA) mechanism, also on port 443. The system must also allow standard HTTPS and/or public WSS traffic on port 443 to be served or proxied concurrently without requiring SPA.
  * 1.2. System Scope: The system comprises two main components:
-   * SPAMTS Server: A custom server-side application.
-   * SPAMTS Client: A client-side application or wrapper responsible for performing SPA and establishing the tunnel.
+   * Server: A custom server-side application.
+   * Client: A client-side application or wrapper responsible for performing SPA and establishing the tunnel.
  * 1.3. Core Paradigm: "Authenticate First (via SPA on port 443), then Obfuscate/Multiplex (tunneling and public services on port 443)."
  * 1.4. Target Use Case: Secure, stealthy remote access to a service, bypassing restrictive firewalls that only allow standard web traffic on port 443, while also providing standard web services on the same port.
 2. General System Requirements
  * 2.1. Port Unification: All external inbound network communication for SPA, tunneling, and public web services shall occur exclusively over TCP port 443.
  * 2.2. Operating Environment:
-   * Server: The SPAMTS Server shall be deployable on common Linux distributions supporting both x86_64 and ARM-based (e.g., arm64/aarch64) architectures.
-   * Client: The SPAMTS Client shall be compatible with common client operating systems (Linux, macOS, Windows) supporting both x86_64 and ARM-based (e.g., arm64/aarch64, Apple Silicon) architectures.
+   * Server: The Server shall be deployable on common Linux distributions supporting both x86_64 and ARM-based (e.g., arm64/aarch64) architectures.
+   * Client: The Client shall be compatible with common client operating systems (Linux, macOS, Windows) supporting both x86_64 and ARM-based (e.g., arm64/aarch64, Apple Silicon) architectures.
  * 2.3. Security Principles: The system shall adhere to principles of defense-in-depth, least privilege, and aim for maximum stealth of the tunneling capability. All cryptographic operations shall use strong, industry-standard algorithms and practices.
  * 2.4. Protocol Obfuscation: The tunneling protocol shall be Secure WebSockets (wss://) to emulate legitimate web traffic.
-3. Server-Side Application (SPAMTS Server) Requirements
+3. Server-Side Application (Server) Requirements
  * 3.1. Port Listening & Initial Connection Handling
    * 3.1.1. The server shall listen for incoming TCP connections exclusively on port 443 on a designated network interface.
    * 3.1.2. For each new incoming connection, the server shall buffer initial data packet(s) to determine the client's intent (SPA knock or standard service request) before committing to a specific protocol handler.
@@ -69,7 +69,7 @@ Project Requirements Document: SPA-Protected Multiplexed Tunneling System (SPAMT
  * 3.7. Security Hardening
    * 3.7.1. The server shall be developed with secure coding practices to prevent common vulnerabilities.
    * 3.7.2. It shall handle network errors and unexpected client behavior gracefully without crashing.
-4. Client-Side Application (SPAMTS Client) Requirements
+4. Client-Side Application (Client) Requirements
  * 4.1. SPA "Knock" Generation
    * 4.1.1. The client shall construct the SPA packet payload including a current timestamp, a unique nonce, and any other required data as per the defined SPA packet format.
    * 4.1.2. The client shall encrypt the SPA payload and compute an HMAC using pre-shared keys.
