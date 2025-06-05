@@ -11,5 +11,7 @@ Key Features:
  * Multiplexed Public Services: Concurrently, the mask-443 server can handle standard HTTPS requests and/or public (non-hidden) Secure WebSocket connections on the same port 443. This allows a single public-facing endpoint to serve both regular web applications and provide a hidden gateway for authorized users.
  * Port Unification: All interactions – the secure knock, the obfuscated tunnel, and public web traffic – occur exclusively over TCP port 443, maximizing compatibility with strict firewall policies.
  * Enhanced Security & Stealth: By hiding service entry points until a cryptographic knock is received and then channeling traffic through an encrypted WSS tunnel, mask-443 provides a robust defense-in-depth strategy, significantly reducing the attack surface and enhancing the stealth of your backend services.
+
 The mask-443 server is the intelligent gatekeeper, listening on port 443, differentiating SPA knocks from regular traffic, and managing both public services and the SPA-triggered WSS tunnels. The mask-443 client is responsible for generating the secure knock and establishing the WSS tunnel to interface with local applications (e.g., an SSH client via ProxyCommand).
+
 This system is ideal for users and administrators who need secure, covert access to services in environments where direct connections are blocked or heavily monitored, without sacrificing the ability to host standard web services on the conventional HTTPS port.
