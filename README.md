@@ -4,6 +4,7 @@ Multiplexed Access with Secure Knock-Authentication on 443
 ## Overview
 **mask-443** (Multiplexed Access with Secure Knock-Authentication on 443) is a sophisticated system designed to provide stealthy, secure access to backend services (such as SSH) while simultaneously serving standard web traffic, all over a single TCP port: 443. This allows services to be accessed through restrictive network environments that typically only permit HTTPS/WSS traffic, effectively "masking" the presence of the hidden services.
 The core principle of mask-443 is an "authenticate first, then obfuscate and multiplex" paradigm. It achieves this through two main components: a custom server application and a corresponding client utility.
+
 Key Features:
  * Secure Knock-Authentication (SPA-like): Before any service tunnel is established, clients must perform a cryptographic "knock" – a Single Packet Authorization sequence. This pre-authentication step ensures that the tunneling endpoint remains entirely hidden and inaccessible to unauthorized users and automated scanners.
  * Obfuscated Tunneling via Secure WebSockets (WSS): Once authenticated by the "knock," mask-443 establishes a Secure WebSocket (wss://) tunnel between the client and server. Traffic for backend services (e.g., SSH) is then routed through this tunnel, appearing as legitimate encrypted web traffic on port 443.
